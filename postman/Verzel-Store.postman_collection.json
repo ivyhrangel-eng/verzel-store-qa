@@ -1,0 +1,1160 @@
+{
+  "info": {
+    "_postman_id": "86f756ba-eabe-4878-916d-655b6a0b9c28",
+    "name": "Verzel Store | Teste Técnico QA",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58775442",
+    "_collection_link": "https://go.postman.co/collection/58775442-86f756ba-eabe-4878-916d-655b6a0b9c28?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 - Frete grátis | Análise de Valor Limite",
+      "item": [
+        {
+          "name": "Frete | Abaixo do limite | R$ 199,90",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\n    \"status code deve ser 200\", function()\n    {pm.response.to.have.status(200)\n    })\n\n   pm.test(\"subtotal deve ser R$ 199,90\", function () {\n    const response = pm.response.json();\n    pm.expect(response.subtotal).to.eql(199.90);\n});\n\npm.test( \"frete grátis deve ser falso abaixo de R$ 200,00\", function (){\n    const response = pm.response.json();\n    pm.expect(response.freteGratis).to.eql(false);\n});\n\npm.test(\"frete deve ser 19,90\", function () {\n    const response = pm.response.json();\n    pm.expect(response.frete).to.eql(19.9);\n});\n\n\npm.test( \"deve faltar R$0,10 centavos para o frete grátis\", \nfunction(){\n    const response = pm.response.json();\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(0.1);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"itens\": [\r\n    {\r\n      \"produtoId\": \"P005\",\r\n      \"quantidade\": 1\r\n    },\r\n    \r\n    {\r\n        \"produtoId\": \"P008\",\r\n        \"quantidade\": 1\r\n    },\r\n\r\n    {\r\n        \"produtoId\": \"P004\",\r\n        \"quantidade\": 1\r\n    }\r\n  ]\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Frete | Abaixo do limite | R$ 199,90",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P008\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P004\",\r\n            \"quantidade\": 1\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+                  "protocol": "https",
+                  "host": [
+                    "verzel-store",
+                    "qa-test-verzel-store",
+                    "workers",
+                    "dev"
+                  ],
+                  "path": [
+                    "api",
+                    "carrinho",
+                    "calcular"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": ":status",
+                  "value": "200"
+                },
+                {
+                  "key": "date",
+                  "value": "Wed, 07 Oct 2026 12:27:50 GMT"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "access-control-allow-origin",
+                  "value": "*"
+                },
+                {
+                  "key": "access-control-allow-headers",
+                  "value": "content-type"
+                },
+                {
+                  "key": "access-control-allow-methods",
+                  "value": "GET, POST, OPTIONS"
+                },
+                {
+                  "key": "report-to",
+                  "value": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=ex2C0hm4pBDfiaXrIXPqpm3mkKW%2FrYEBmWDr02Dwc8iJ3xjVyBM5HiwCb2vB8iK7EXEKcRk9qxTOVe5nJvyNALWvXVrxBPaJPffINe2LUOnvW8SpDwQAhWzj6UgA0K7Rms7AYVcvxhcmEToLFKFQU5%2BfEsgnZT1FgkkA13bQvUo%3D\"}]}"
+                },
+                {
+                  "key": "nel",
+                  "value": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                },
+                {
+                  "key": "content-encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "server",
+                  "value": "cloudflare"
+                },
+                {
+                  "key": "cf-ray",
+                  "value": "a46ce6f88ac30305-GRU"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=86400"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"itens\": [\n    {\n      \"produtoId\": \"P005\",\n      \"nome\": \"Mochila Urbana 20L\",\n      \"precoUnitario\": 100,\n      \"quantidade\": 1,\n      \"total\": 100\n    },\n    {\n      \"produtoId\": \"P008\",\n      \"nome\": \"Garrafa Térmica 750ml\",\n      \"precoUnitario\": 50,\n      \"quantidade\": 1,\n      \"total\": 50\n    },\n    {\n      \"produtoId\": \"P004\",\n      \"nome\": \"Boné Aba Curva\",\n      \"precoUnitario\": 49.9,\n      \"quantidade\": 1,\n      \"total\": 49.9\n    }\n  ],\n  \"subtotal\": 199.9,\n  \"desconto\": 0,\n  \"frete\": 19.9,\n  \"freteGratis\": false,\n  \"valorFaltanteFreteGratis\": 0.1,\n  \"total\": 219.8,\n  \"cupom\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Frete | Valor limite | R$ 200,00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"o status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200)\r\n    })\r\n\r\n    pm.test(\r\n        \"o subtotal deve ser R$ 200,00\", function(){\r\n          const response =  pm.response.json();\r\n          pm.expect(response.subtotal).to.equal(200)\r\n        }\r\n    )\r\n    \r\n    pm.test(\r\n        \"Frete grátis para compras com subtotal a partir de R$ 200,00,inclusive\", function(){\r\n            const response = pm.response.json();\r\n            pm.expect(response.freteGratis).to.equal(true)\r\n});\r\n\r\n    pm.test(\r\n        \"O valor do frete deve ser R$ 0.00\", function(){\r\n            const response = pm.response.json();\r\n            pm.expect(response.frete).to.eql(0.00);\r\n    });\r\n\r\n    pm.test(\r\n        \"deve faltar R$ 0,00 para o frete grátis\", function(){\r\n            const response = pm.response.json();\r\n            pm.expect(response.valorFaltanteFreteGratis)\r\n            .to.equal(0);\r\n        });\r\n\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"itens\": [\r\n    {\r\n      \"produtoId\": \"P005\",\r\n      \"quantidade\": 2\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Frete | Acima do limite | R$ 209,90",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\n    \"o status code deve ser 200\", function(){\n        pm.response.to.have.status(200);\n    })\n\npm.test(\n    \"o subtotal deve ser 209,90\", function(){\n        const response = pm.response.json();\n        pm.expect(response.subtotal).to.equal(209.9);\n    });\n\npm.test(\n    \"frete grátis para compras a partir de R$ 200,00,inclusive\",function(){\n    const response = pm.response.json();\n        pm.expect(response.freteGratis).to.equal(true);\n});\n\npm.test(\n    \"deve faltar R$ 0,00 para o frete grátis\", function () {\n      const response = pm.response.json();\n        pm.expect(response.valorFaltanteFreteGratis).to.equal(0);\n    });\n\npm.test(\n    \"o frete deve ser R$ 0,00\",function(){\n        const response = pm.response.json();\n        pm.expect(response.frete).to.equal(0);\n    });\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P001\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P008\",\r\n            \"quantidade\": 1\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST | CA08 | Frete antes do desconto | R$ 209,90",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\n    \"o status code deve ser 200\", function(){\n        pm.response.to.have.status(200);\n    })\n\npm.test(\n    \"o subtotal deve ser 209,90\", function(){\n        const response = pm.response.json();\n        pm.expect(response.subtotal).to.equal(209.9);\n    });\n\npm.test(\n    \"frete grátis para compras a partir de R$ 200,00,inclusive\",function(){\n    const response = pm.response.json();\n        pm.expect(response.freteGratis).to.equal(true);\n});\n\npm.test(\n    \"deve faltar R$ 0,00 para o frete grátis\", function () {\n      const response = pm.response.json();\n        pm.expect(response.valorFaltanteFreteGratis).to.equal(0);\n    });\n\npm.test(\n    \"o frete deve ser R$ 0,00\",function(){\n        const response = pm.response.json();\n        pm.expect(response.frete).to.equal(0);\n    });\n\npm.test(\"CA08 | Frete grátis deve considerar o subtotal antes do desconto\", function () {\n    const response = pm.response.json();\n\n    pm.expect(response.subtotal).to.be.at.least(200);\n\n    pm.expect(response.cupom.aplicado).to.equal(true);\n    pm.expect(response.desconto).to.equal(20.99);\n\n    pm.expect(response.subtotal - response.desconto).to.be.below(200);\n\n    pm.expect(response.freteGratis).to.equal(true);\n    pm.expect(response.frete).to.equal(0);\n\n    pm.expect(response.total).to.equal(188.91);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"itens\": [\r\n    {\"produtoId\": \"P005\", \"quantidade\": 1},\r\n    {\"produtoId\": \"P001\", \"quantidade\": 1},\r\n    {\"produtoId\": \"P008\", \"quantidade\": 1}\r\n  ],\r\n  \"cupom\": \"BEMVINDO10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 - Cupons | Regras de desconto",
+      "item": [
+        {
+          "name": "Cupom | BEMVINDO10 | Subtotal R$ 559,70",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"O valor do subtotal é de R$ 559,70\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.subtotal).to.eql(559.7);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 55,97\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(55.97);\r\n});\r\n\r\npm.test( \"frete grátis deve ser verdadeiro a partir de R$ 200,00\", function (){\r\n    const response = pm.response.json();\r\n    pm.expect(response.freteGratis).to.eql(true);\r\n});\r\n\r\npm.test(\"frete deve ser 0,00\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(0.00);\r\n});\r\n\r\npm.test( \"deve faltar R$0,00 para o frete grátis\", \r\nfunction(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(0.00);\r\n});\r\n\r\npm.test(\"cupom bemvindo10 aplicado\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.eql(true)\r\n});\r\n\r\npm.test(\"valor final com desconto e frete aplicado deve ser R$ 503,73\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(503.73);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P007\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P003\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P002\",\r\n            \"quantidade\": 1\r\n        }     \r\n    ],\r\n    \"cupom\": \"BEMVINDO10\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cupom | BEMVINDO10 | Subtotal R$ 150,00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"O valor do subtotal é de R$ 150,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.subtotal).to.eql(150);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 15,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(15);\r\n});\r\n\r\npm.test( \"frete grátis deve ser falso abaixo de R$ 200,00\", function (){\r\n    const response = pm.response.json();\r\n    pm.expect(response.freteGratis).to.eql(false);\r\n});\r\n\r\npm.test(\"frete deve ser 19,90\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(19.9);\r\n});\r\n\r\npm.test( \"deve faltar R$50,00 para o frete grátis\", \r\nfunction(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(50.0);\r\n});\r\n\r\npm.test(\"cupom bemvindo10 aplicado\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.eql(true)\r\n});\r\n\r\npm.test(\"valor final com desconto e frete aplicado deve ser R$ 154,90\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(154.90);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P008\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \"BEMVINDO10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cupom |BEMVINDO10 | Subtotal R$ 200,00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"O valor do subtotal é de R$ 200,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.subtotal).to.eql(200);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 20,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(20);\r\n});\r\n\r\npm.test( \"frete grátis deve ser verdadeiro a partir de R$ 200,00\", function (){\r\n    const response = pm.response.json();\r\n    pm.expect(response.freteGratis).to.eql(true);\r\n});\r\n\r\npm.test(\"frete deve ser 0,00\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(0.00);\r\n});\r\n\r\npm.test( \"deve faltar R$0,00 para o frete grátis\", \r\nfunction(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(0.00);\r\n});\r\n\r\npm.test(\"cupom bemvindo10 aplicado\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.eql(true)\r\n});\r\n\r\npm.test(\"valor final com desconto e frete aplicado deve ser R$ 180,00\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(180.0);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 2\r\n        }\r\n        \r\n    ],\r\n    \"cupom\": \"BEMVINDO10\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 - Comportamento do código do cupom de acordo com a CA02",
+      "item": [
+        {
+          "name": "Cupom: BEMVINDO10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"o subtotal deve ser de R$ 100,00\",function(){\r\n        const response = pm.response.json();\r\n            pm.expect(response.subtotal).to.eql(100);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 10,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(10);})\r\n\r\n\r\npm.test(\"cupom deve ser aplicado\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.equal(true);\r\n});\r\n\r\npm. test( \"cupom BEMVINDO10 aplicado\", function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.codigo).to.equal(\"BEMVINDO10\");\r\n});\r\n\r\npm.test(\"frete deve ser 19,90\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(19.9);\r\n});\r\n\r\npm.test( \"deve faltar R$100,00 para o frete grátis\", \r\nfunction(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(100.0);\r\n});\r\n\r\npm.test(\"valor final com desconto e frete aplicado deve ser R$ 109,90\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(109.9);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \"BEMVINDO10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cupom: bemvindo10 minúsculas + espaço inicial.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"o subtotal deve ser de R$ 100,00\",function(){\r\n        const response = pm.response.json();\r\n            pm.expect(response.subtotal).to.eql(100);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 10,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(10);})\r\n\r\n\r\npm.test(\"cupom deve ser aplicado\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.equal(true);\r\n});\r\n\r\npm.test(\"cupom com espaço inicial e letras minúsculas deve ser reconhecido\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.codigo).to.equal(\"BEMVINDO10\");\r\n});\r\n\r\npm.test(\"frete deve ser 19,90\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(19.9);\r\n});\r\n\r\npm.test( \"deve faltar R$100,00 para o frete grátis\", \r\nfunction(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(100.0);\r\n});\r\n\r\npm.test(\"valor final com desconto e frete aplicado deve ser R$ 109,90\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(109.9);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \" bemvindo10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cupom:bemvindo10  minúsculas + espaço no final",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"o subtotal deve ser de R$ 100,00\",function(){\r\n        const response = pm.response.json();\r\n            pm.expect(response.subtotal).to.eql(100);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 10,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(10);})\r\n\r\n\r\npm.test(\"cupom deve ser aplicado\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.equal(true);\r\n});\r\n\r\npm.test(\"cupom com espaço no final e letras minúsculas deve ser reconhecido\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.codigo).to.equal(\"BEMVINDO10\");\r\n});\r\n\r\npm.test(\"frete deve ser 19,90\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(19.9);\r\n});\r\n\r\npm.test( \"deve faltar R$100,00 para o frete grátis\", \r\nfunction(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(100.0);\r\n});\r\n\r\npm.test(\"valor final com desconto e frete aplicado deve ser R$ 109,90\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(109.9);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \"bemvindo10 \"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cupom:    BemVindo10 minúsculas + maiúsculas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"o subtotal deve ser de R$ 100,00\",function(){\r\n        const response = pm.response.json();\r\n            pm.expect(response.subtotal).to.eql(100);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 10,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(10);})\r\n\r\n\r\npm.test(\"cupom deve ser aplicado\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.equal(true);\r\n});\r\n\r\npm.test(\"cupom com letras maiúsculas e minúsculas deve ser reconhecido\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.codigo).to.equal(\"BEMVINDO10\");\r\n});\r\n\r\npm.test(\"frete deve ser 19,90\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(19.9);\r\n});\r\n\r\npm.test( \"deve faltar R$100,00 para o frete grátis\", \r\nfunction(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(100.0);\r\n});\r\n\r\npm.test(\"valor final com desconto e frete aplicado deve ser R$ 109,90\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(109.9);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \"BemVindo10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cupom: Bem Vindo10 minúsculas + maiúsculas  + espaço interno",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\n    \"status code deve ser 200\", function(){\n        pm.response.to.have.status(200);\n    })\n\npm.test(\n    \"o subtotal deve ser de R$ 100,00\",function(){\n        const response = pm.response.json();\n            pm.expect(response.subtotal).to.eql(100);\n    });\n\npm.test(\n    \"O valor do desconto é de R$ 00,00\", function(){\n        const response = pm.response.json();\n        pm.expect(response.desconto).to.eql(0.00);})\n\n\npm.test(\"cupom com espaço interno e minúsculas e maiúsculas deve ser rejeitado\", function () {\n    const response = pm.response.json();\n    pm.expect(response.cupom.aplicado).to.equal(false);\n});\n\npm.test(\"mensagem retornada deve ser exatamente Cupom inválido\", function () {\n    const response = pm.response.json();\n    pm.expect(response.cupom.mensagem).to.equal(\"Cupom inválido.\");\n});\n\npm.test(\"frete deve ser 19,90\", function () {\n    const response = pm.response.json();\n    pm.expect(response.frete).to.eql(19.9);\n});\n\npm.test( \"deve faltar R$100,00 para o frete grátis\", function(){\n    const response = pm.response.json();\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(100.00);\n});\n\npm.test(\"valor final sem desconto deve ser de R$ 119,90\", function () {\n    const response = pm.response.json();\n    pm.expect(response.total).to.eql(119.9);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P005\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \"Bem Vindo10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 - Validação de cupons | CA03 e CA04",
+      "item": [
+        {
+          "name": "Cupom: VERAO2026 expirado | CA04",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function(){\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"o subtotal deve ser de R$ 189,90\",function(){\r\n        const response = pm.response.json();\r\n            pm.expect(response.subtotal).to.eql(189.9);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 00,00\", function(){\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(0);})\r\n\r\n\r\npm.test(\r\n    \"código retornado deve ser VERAO2026\",function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.codigo).to.eql(\"VERAO2026\")\r\n    ;})\r\n\r\npm.test(\r\n    \"cupom VERAO2026 deve ser rejeitado\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.aplicado).to.eql(false);\r\n});\r\n\r\npm.test(\r\n    \"cupom VERAO2026 deve informar que está expirado\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.cupom.mensagem).to.eql(\"Cupom expirado.\");\r\n});\r\n\r\npm.test(\r\n    \"frete deve ser 19,90\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.eql(19.9);\r\n});\r\n\r\npm.test( \r\n    \"deve faltar R$10,10 para o frete grátis\", function(){\r\n    const response = pm.response.json();\r\n    pm.expect(response.valorFaltanteFreteGratis).to.eql(10.1);\r\n});\r\n\r\npm.test(\r\n    \"valor final sem desconto deve ser de R$ 209,80\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.eql(209.8);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"itens\": [\n        {\n            \"produtoId\": \"P003\",\n            \"quantidade\": 1\n        }\n    ],\n    \"cupom\": \"VERAO2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cupom inexistente | VERAO15 | CA03.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\r\n    \"status code deve ser 200\", function () {\r\n        pm.response.to.have.status(200);\r\n    })\r\n\r\npm.test(\r\n    \"o subtotal deve ser de R$ 139,90\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.subtotal).to.eql(139.9);\r\n    });\r\n\r\npm.test(\r\n    \"O valor do desconto é de R$ 00,00\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.desconto).to.eql(0);\r\n    })\r\n\r\n\r\npm.test(\r\n    \"código retornado deve ser VERAO15\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.cupom.codigo).to.eql(\"VERAO15\")\r\n            ;\r\n    })\r\n\r\npm.test(\r\n    \"cupom VERAO15 deve ser rejeitado\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.cupom.aplicado).to.eql(false);\r\n    });\r\n\r\npm.test(\r\n    \"cupom VERAO15 deve informar que é inválido\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.cupom.mensagem).to.eql(\"Cupom inválido.\");\r\n    });\r\n\r\npm.test(\r\n    \"frete deve ser 19,90\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.frete).to.eql(19.9);\r\n    });\r\n\r\npm.test(\r\n    \"deve faltar R$60,10 para o frete grátis\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.valorFaltanteFreteGratis).to.eql(60.1);\r\n    });\r\n\r\npm.test(\r\n    \"valor final sem desconto deve ser de R$ 159,80\", function () {\r\n        const response = pm.response.json();\r\n        pm.expect(response.total).to.eql(159.8);\r\n    });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P002\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \"VERAO15\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 - Confirmação de pedidos | API",
+      "item": [
+        {
+          "name": "Pedido finalizado com cupom valido|BEMVINDO10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"O status code deve ser 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"O número do pedido deve seguir o formato VZ-000000\", function () {\n    const response = pm.response.json();\n    pm.expect(response.numero).to.match(/^VZ-[0-9]{6}$/);\n});\n\npm.test(\"O pedido deve ter um cliente\", function () {\n    const response = pm.response.json();\n    pm.expect(response.cliente.nome).to.eql(\"Maria Silva\");\n});\n\npm.test(\"O pedido deve ter um email\", function () {\n    const response = pm.response.json();\n    pm.expect(response.cliente.email).to.eql(\"maria@exemplo.com\");\n});\n\npm.test(\"O pedido deve ter um cep\", function () {\n    const response = pm.response.json();\n    pm.expect(response.cliente.cep).to.eql(\"01310100\");\n});\n\npm.test(\"O pedido deve conter o produto Mochila Urbana 20L\", function () {\n    const response = pm.response.json();\n    pm.expect(response.itens[0].nome).to.eql(\"Mochila Urbana 20L\");\n});\n\npm.test(\"O pedido deve ter uma quantidade\", function () {\n    const response = pm.response.json();\n    pm.expect(response.itens[0].quantidade).to.eql(1);\n});\n\npm.test(\"O pedido deve ter um subtotal\", function () {\n    const response = pm.response.json();\n    pm.expect(response.subtotal).to.eql(100);\n});\n\npm.test(\"O pedido deve ter um desconto\", function () {\n    const response = pm.response.json();\n    pm.expect(response.desconto).to.eql(10);\n});\n\npm.test(\"O pedido deve ter um cupom aplicado\", function () {\n    const response = pm.response.json();\n    pm.expect(response.cupom.aplicado).to.be.true;\n});\n\npm.test(\"O pedido deve apresentar o cupom valido BEMVINDO10\",function(){\n    const response =  pm.response.json();\n    pm.expect(response.cupom.codigo).to.eql(\"BEMVINDO10\");\n});\n\npm.test(\"O pedido deve ter a mensagem de cupom aplicado\", function () {\n    const response = pm.response.json();\n    pm.expect(response.cupom.mensagem).to.eql(\"Cupom aplicado: 10% de desconto nos produtos.\");\n});\n\npm.test(\"O frete deve ser R$ 19,90\", function () {\n    const response = pm.response.json();\n    pm.expect(response.frete).to.eql(19.9);\n});\n\npm.test(\"O pedido não deve ter frete grátis\",function(){\n    const response = pm.response.json();\n    pm.expect(response.freteGratis).to.eql(false);\n});\n\npm.test(\"O pedido deve apresentar o total com desconto\", function () {\n    const response = pm.response.json();\n    pm.expect(response.total).to.eql(109.9);\n});\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cliente\": {\r\n    \"nome\": \"Maria Silva\",\r\n    \"email\": \"maria@exemplo.com\",\r\n    \"cep\": \"01310-100\"\r\n  },\r\n  \"itens\": [\r\n    {\r\n      \"produtoId\": \"P005\",\r\n      \"quantidade\": 1\r\n    }\r\n  ],\r\n  \"cupom\": \"BEMVINDO10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/pedidos",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "pedidos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pedido finalizado com cupom expirado|VERAO2026",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"O status code deve ser 422\", function () {\r\n    pm.response.to.have.status(422);\r\n});\r\n\r\npm.test(\"O código de erro deve ser CUPOM_EXPIRADO\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.codigo).to.eql(\"CUPOM_EXPIRADO\");\r\n});\r\n\r\npm.test(\"A mensagem deve informar que o cupom está expirado\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.mensagem).to.eql(\"Cupom expirado.\");\r\n});\r\n\r\npm.test(\"O campo responsável pelo erro deve ser cupom\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.campo).to.eql(\"cupom\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cliente\": {\r\n    \"nome\": \"Maria Silva\",\r\n    \"email\": \"maria@exemplo.com\",\r\n    \"cep\": \"01310-100\"\r\n  },\r\n  \"itens\": [\r\n    {\r\n      \"produtoId\": \"P005\",\r\n      \"quantidade\": 1\r\n    }\r\n  ],\r\n  \"cupom\": \"VERAO2026\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/pedidos",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "pedidos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pedido rejeitado com cupom inexistente | VERAO15",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"O status code deve ser 422\", function () {\r\n    pm.response.to.have.status(422);\r\n});\r\n\r\npm.test(\"O código de erro deve ser CUPOM_INVALIDO\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.codigo).to.eql(\"CUPOM_INVALIDO\");\r\n});\r\n\r\npm.test(\"A mensagem deve informar que o cupom é inválido\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.mensagem).to.eql(\"Cupom inválido.\");\r\n});\r\n\r\npm.test(\"O campo responsável pelo erro deve ser cupom\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.campo).to.eql(\"cupom\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cliente\": {\r\n    \"nome\": \"Maria Silva\",\r\n    \"email\": \"maria@exemplo.com\",\r\n    \"cep\": \"01310-100\"\r\n  },\r\n  \"itens\": [\r\n    {\r\n      \"produtoId\": \"P005\",\r\n      \"quantidade\": 1\r\n    }\r\n  ],\r\n  \"cupom\": \"VERAO15\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/pedidos",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "pedidos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06 - Consulta de produtos | API",
+      "item": [
+        {
+          "name": "Consulta de produto não cadastrado|P999.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status code deve ser 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"o código de erro deve ser PRODUTO_NAO_ENCONTRADO\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.codigo).to.eql(\"PRODUTO_NAO_ENCONTRADO\");\r\n});\r\n\r\npm.test(\"a mensagem de erro deve ser Produto P999 não encontrado.\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.erro.mensagem).to.eql(\"Produto P999 não encontrado.\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/produtos/P999",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "produtos",
+                "P999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta de produto cadastrado|P004.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code deve ser 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"O produto deve ter o id P004\", function () {\n    const response = pm.response.json();\n    pm.expect(response.id).to.eql(\"P004\");\n});\n\npm.test(\"O produto deve ter o nome Boné Aba Curva\", function () {\n    const response = pm.response.json();\n    pm.expect(response.nome).to.eql(\"Boné Aba Curva\")\n});\n\npm.test(\"O produto deve ter a descrição Ajuste traseiro com fivela metálica.\", function () {\n    const response = pm.response.json();\n    pm.expect(response.descricao).to.eql(\"Ajuste traseiro com fivela metálica.\")\n});\n\npm.test(\"A categoria do produto deve ser Acessórios\", function () {\n    const response = pm.response.json();\n    pm.expect(response.categoria).to.eql(\"Acessórios\")\n});\n\npm.test(\"O preço do produto deve ser R$ 49,90\", function () {\n    const response = pm.response.json();\n    pm.expect(response.preco).to.eql(49.9)\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/produtos/P004",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "produtos",
+                "P004"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "07 - Limite de quantidade | CA10",
+      "item": [
+        {
+          "name": "POST | CA10 | Quantidade máxima permitida | 5 unidades",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"O status code é 200\", function(){\n    pm.response.to.have.status(200);\n});\n\npm.test(\"O nome do produto deve ser 'Jaqueta Corta-Vento'\", function () {\n    const response = pm.response.json();\n    pm.expect(response.itens[0].nome).to.eql('Jaqueta Corta-Vento');\n});\n\npm.test(\"A quantidade de itens adicionados é 5\", function () {\n    const response = pm.response.json();\n    pm.expect(response.itens[0].quantidade).to.eql(5);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P007\",\r\n            \"quantidade\": 5\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST | CA10 | Abaixo do limite | 4 unidades",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"O status code é 200\", function(){\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"O nome do produto deve ser 'Jaqueta Corta-Vento'\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.itens[0].nome).to.eql('Jaqueta Corta-Vento');\r\n});\r\n\r\npm.test(\"A quantidade de itens adicionados é 4\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.itens[0].quantidade).to.eql(4);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P007\",\r\n            \"quantidade\": 4\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST | CA10 | Cálculo aceita 6 unidades | BUG-002",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"CA10 | Deve rejeitar quantidade superior a 5\", function () {\r\n    pm.response.to.have.status(422);\r\n});\r\n\r\npm.test(\"CA10 | Deve retornar código de quantidade máxima excedida\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.erro, \"A resposta deveria conter um objeto de erro\")\r\n      .to.be.an(\"object\");\r\n\r\n    pm.expect(response.erro?.codigo)\r\n      .to.equal(\"QUANTIDADE_MAXIMA_EXCEDIDA\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P007\",\r\n            \"quantidade\": 6\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST | CA10 | Pedido aceita 6 unidades | BUG-002",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"CA10 | Deve rejeitar quantidade superior a 5\", function () {\r\n    pm.response.to.have.status(422);\r\n});\r\n\r\npm.test(\"CA10 | Deve retornar código de quantidade máxima excedida\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.erro, \"A resposta deveria conter um objeto de erro\")\r\n      .to.be.an(\"object\");\r\n\r\n    pm.expect(response.erro?.codigo)\r\n      .to.equal(\"QUANTIDADE_MAXIMA_EXCEDIDA\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cliente\": {\r\n    \"nome\": \"Maria Silva\",\r\n    \"email\": \"maria@exemplo.com\",\r\n    \"cep\": \"01310-100\"\r\n  },\r\n  \"itens\": [\r\n    {\r\n      \"produtoId\": \"P007\",\r\n      \"quantidade\": 6\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/pedidos",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "pedidos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "08 - Precisão monetária | CA11",
+      "item": [
+        {
+          "name": "POST | CA11 | Precisão dos valores com desconto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"CA11 | Status deve ser 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"CA11 | Subtotal deve ser R$ 139,70\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.subtotal).to.equal(139.7);\r\n});\r\n\r\npm.test(\"CA11 | Desconto deve ser R$ 13,97\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.desconto).to.equal(13.97);\r\n});\r\n\r\npm.test(\"CA11 | Frete deve ser R$ 19,90\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.frete).to.equal(19.9);\r\n});\r\n\r\npm.test(\"CA11 | Total deve ser R$ 145,63\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.total).to.equal(145.63);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"P001\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P004\",\r\n            \"quantidade\": 1\r\n        },\r\n        {\r\n            \"produtoId\": \"P006\",\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"cupom\": \"BEMVINDO10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://verzel-store.qa-test-verzel-store.workers.dev/api/carrinho/calcular",
+              "protocol": "https",
+              "host": [
+                "verzel-store",
+                "qa-test-verzel-store",
+                "workers",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "carrinho",
+                "calcular"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
